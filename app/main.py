@@ -47,6 +47,17 @@ Preferred Qualifications
 - Strong problem-solving and analytical skills
 - Excellent written and verbal communication skills
 '''
+class job_desc(BaseModel):
+  company_name:str | None=None
+  job_title:str | None=None
+  required_skills:list[str]=Field(default_factory=list)
+  preferred_skills:list[str]=Field(default_factory=list)
+  responsiblities:list[str]=Field(default_factory=list)
+  qualifications:list[str]=Field(default_factory=list)
+  minimum_experience:str | None=None
+  education:str | None=None
+
+jobd_schema=job_desc.model_json_schema()
 
 system_prompt=f'''
 You are an expert HR assistant.
@@ -93,3 +104,6 @@ response=client.chat.completions.create(model=model,messages=messages,response_f
 answer=response.choices[0].message.content
 
 raw_json=answer
+
+job_data=job_desc.model_validate_json(raw_json)
+print(job_data)
