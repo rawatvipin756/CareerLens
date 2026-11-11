@@ -59,7 +59,7 @@ class job_desc(BaseModel):
   responsiblities:list[str]=Field(default_factory=list)
   qualifications:list[str]=Field(default_factory=list)
   minimum_experience:str | None=None
-  education:str | None=None
+  education:list[str]=Field(default_factory=list)
 
 jobd_schema=job_desc.model_json_schema()
 
@@ -112,7 +112,7 @@ import json
 job_data=json.loads(raw_json)
 job=job_desc(**job_data)
 print(job.minimum_experience)
-print(job.education_requirements)
+print(job.education)
 
 class MatchResult(BaseModel):
   score:float
